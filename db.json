@@ -14,6 +14,11 @@
       "id": 3,
       "produto": "Bolacha",
       "categoria": 2
+    },
+    {
+      "produto": "Testando novo produto de limpiza",
+      "categoria": "1",
+      "id": 4
     }
   ],
   "categorias": [

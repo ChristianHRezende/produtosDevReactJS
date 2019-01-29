@@ -5,6 +5,7 @@ import ProdutosHome from './ProdutosHome'
 import Categoria from './Categoria'
 
 import Api from './Api'
+import ProdutosNovo from './ProdutosNovo';
 
 class Produtos extends Component {
 
@@ -26,6 +27,15 @@ class Produtos extends Component {
     }
 
 
+    /**
+     * Handle enter press to create new category
+     */
+    createProduto = (produto) => {
+        Api.createProduto(produto)
+            .then((res) => {
+                this.loadData();
+            })
+    }
     /**
      * Handle enter press to create new category
      */
@@ -130,10 +140,12 @@ class Produtos extends Component {
                             placeholder="Nova categoria">
                         </input>
                     </div>
+                    <Link to="/produtos/novo">Novo produto</Link>
                 </div>
                 <div className='col-md-10'>
                     <h1>Produtos</h1>
                     <Route exact path={match.url} component={ProdutosHome} />
+                    <Route exact path={match.url + "/novo"} render={(props) => { return <ProdutosNovo {...props} categorias={this.state.categorias} createProduto={this.createProduto} /> }} />
                     <Route path={match.url + '/categoria/:catId'} component={Categoria} />
                 </div>
             </div>
