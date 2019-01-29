@@ -38,7 +38,6 @@ class Produtos extends Component {
             </li>
         )
 
-
     }
 
     /**
