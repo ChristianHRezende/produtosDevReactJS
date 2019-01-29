@@ -23,20 +23,7 @@ class Produtos extends Component {
             this.setState({ categorias: res.data })
         })
     }
-    /**
-     * Render category
-     */
-    renderCategoria = cat => {
-        return (
-            <li key={cat.id}>
-                <Link to={`/produtos/categoria/${cat.id}`} > {cat.categoria}</Link>
-                <button className="btn btn-sm btn-link" onClick={() => this.removeCategoria(cat)}>
-                    <span className="glyphicon glyphicon-remove"></span>
-                </button>
-            </li>
-        )
 
-    }
 
     /**
      * Handle enter press to create new category
@@ -57,6 +44,22 @@ class Produtos extends Component {
             .then(() => {
                 this.loadData();
             })
+    }
+
+
+    /**
+     * Render category
+     */
+    renderCategoria = cat => {
+        return (
+            <li key={cat.id}>
+                <Link to={`/produtos/categoria/${cat.id}`} > {cat.categoria}</Link>
+                <button className="btn btn-sm btn-link" onClick={() => this.removeCategoria(cat)}>
+                    <span className="glyphicon glyphicon-remove"></span>
+                </button>
+            </li>
+        )
+
     }
 
     render() {
