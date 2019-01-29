@@ -11,7 +11,8 @@ class Produtos extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            categorias: []
+            categorias: [],
+            editingCategoria: ''
         }
     }
     componentDidMount() {
@@ -38,7 +39,39 @@ class Produtos extends Component {
 
         }
     }
+    /**
+     * Handle enter press to edit category
+     */
+    handleEditCategoria = (key) => {
+        if (key.keyCode === 13) {
 
+            Api.updateCategoria(
+                {
+                    id: this.state.editingCategoria.id,
+                    categoria: this.refs['cat-' + this.state.editingCategoria.id].value
+                }
+            )
+                .then(res => {
+                    this.refs['cat-' + this.state.editingCategoria.id].value = ""
+                    this.setState({ editingCategoria: '' })
+                    this.loadData();
+                })
+
+        }
+    }
+    /**
+     * Edit Category
+     */
+    editCategoria = (cat) => {
+        this.setState({ editingCategoria: cat })
+    }
+    cancelEditing = () => {
+        this.setState({ editingCategoria: '' })
+    }
+
+    /**
+    * Delete Category
+    */
     removeCategoria = (cat) => {
         Api.deleteCategoria(cat.id)
             .then(() => {
@@ -53,10 +86,26 @@ class Produtos extends Component {
     renderCategoria = cat => {
         return (
             <li key={cat.id}>
-                <Link to={`/produtos/categoria/${cat.id}`} > {cat.categoria}</Link>
-                <button className="btn btn-sm btn-link" onClick={() => this.removeCategoria(cat)}>
-                    <span className="glyphicon glyphicon-remove"></span>
-                </button>
+                {
+                    this.state.editingCategoria === cat &&
+                    <div className="input-group">
+                        <div className="input-group-btn">
+                            <input ref={'cat-' + cat.id} className="form-control" type="text" defaultValue={cat.categoria} onKeyUp={this.handleEditCategoria}></input>
+                            <button className="btn" onClick={this.cancelEditing}>cancel</button>
+                        </div>
+                    </div>
+                }
+                {this.state.editingCategoria !== cat.id &&
+                    <div>
+                        <Link to={`/produtos/categoria/${cat.id}`} > {cat.categoria}</Link>
+                        <button className="btn btn-sm btn-link" onClick={() => this.removeCategoria(cat)}>
+                            <span className="glyphicon glyphicon-remove"></span>
+                        </button>
+                        <button className="btn btn-sm btn-link" onClick={() => this.editCategoria(cat)}>
+                            <span className="glyphicon glyphicon-pencil"></span>
+                        </button>
+                    </div>
+                }
             </li>
         )
 
@@ -69,7 +118,7 @@ class Produtos extends Component {
             <div className='row'>
                 <div className='col-md-2'>
                     <h3>Categorias</h3>
-                    <ul>
+                    <ul style={{ listStyle: 'none', padding: 0 }}>
                         {categorias.map(cat => this.renderCategoria(cat))}
                     </ul>
                     <div className="well well-sm">
