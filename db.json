@@ -19,6 +19,21 @@
       "produto": "Testando novo produto de limpiza",
       "categoria": "1",
       "id": 4
+    },
+    {
+      "produto": "Novo produto com redirect ",
+      "categoria": "2",
+      "id": 5
+    },
+    {
+      "produto": "Novo Produto",
+      "categoria": "4",
+      "id": 6
+    },
+    {
+      "produto": "TEtse",
+      "categoria": "6",
+      "id": 7
     }
   ],
   "categorias": [

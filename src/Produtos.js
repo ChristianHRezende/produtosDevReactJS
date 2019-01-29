@@ -16,6 +16,7 @@ class Produtos extends Component {
             editingCategoria: ''
         }
     }
+    
     componentDidMount() {
         this.loadData()
     }
@@ -28,14 +29,12 @@ class Produtos extends Component {
 
 
     /**
-     * Handle enter press to create new category
+     * create new category
      */
     createProduto = (produto) => {
-        Api.createProduto(produto)
-            .then((res) => {
-                this.loadData();
-            })
+        return Api.createProduto(produto)
     }
+
     /**
      * Handle enter press to create new category
      */
