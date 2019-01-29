@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+import Api from './Api'
+
 class Categoria extends Component {
     constructor(props) {
         super(props)
@@ -19,9 +20,9 @@ class Categoria extends Component {
     }
 
     loadData(id) {
-        axios.get('http://localhost:3001/produtos?categoria=' + id)
+        Api.loadProdutos(id)
             .then(res => { this.setState({ produtos: res.data }) })
-        axios.get('http://localhost:3001/categorias/' + id)
+        Api.loadCategoria(id)
             .then(res => {
                 this.setState({ categoria: res.data })
             })

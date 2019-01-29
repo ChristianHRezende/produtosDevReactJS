@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom'
 
-import axios from 'axios'
-
 import ProdutosHome from './ProdutosHome'
 import Categoria from './Categoria'
 
@@ -45,14 +43,11 @@ class Produtos extends Component {
      */
     handleNewCategoria = (key) => {
         if (key.keyCode === 13) {
-            axios.post("http://localhost:3001/categorias",
-                {
-                    categoria: this.refs.categoria.value
-                }
-            ).then(res => {
-                this.refs.categoria.value = ""
-                this.loadData();
-            })
+            Api.createCategoria(this.refs.categoria.value)
+                .then(res => {
+                    this.refs.categoria.value = ""
+                    this.loadData();
+                })
 
         }
     }

@@ -40,6 +40,10 @@
     {
       "categoria": "Sala",
       "id": 6
+    },
+    {
+      "categoria": "TEste",
+      "id": 7
     }
   ]
 }
