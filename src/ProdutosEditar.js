@@ -1,19 +1,30 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-class ProdutosNovo extends Component {
+class ProdutosEditar extends Component {
+
     constructor(props) {
         super(props)
         this.state = {
             redirect: ''
         }
     }
-    handleNewProduto = () => {
+    componentDidMount = () => {
+        this.props.readProduto(this.props.match.params.prodId)
+            .then(res => {
+                this.refs.produto.value = res.data.produto
+                this.refs.categoria.value = res.data.categoria
+            })
+    }
+
+    handleEditProduto = () => {
         const produto = {
+            id: this.props.match.params.prodId,
             produto: this.refs.produto.value,
             categoria: this.refs.categoria.value
         }
-        this.props.createProduto(produto)
-            .then(res => this.setState({ redirect: 'categoria/' + produto.categoria }))
+        console.log(produto)
+        this.props.editProduto(produto)
+            .then(() => this.setState({ redirect: '/produtos/categoria/' + produto.categoria }))
     }
 
     render() {
@@ -23,7 +34,7 @@ class ProdutosNovo extends Component {
         }
         return (
             <div>
-                <h2>Novo Produto</h2>
+                <h2>Editar Produto</h2>
                 <select ref='categoria'>
                     {categorias.map(categoria => <option key={categoria.id} value={categoria.id}>{categoria.categoria}</option>)}</select>
                 <input
@@ -31,9 +42,11 @@ class ProdutosNovo extends Component {
                     placeholder="Nome do novo produto"
                     ref="produto">
                 </input>
-                <button onClick={this.handleNewProduto}>Salvar</button>
+                <button onClick={this.handleEditProduto}>Salvar</button>
             </div>
-            );
+
+        )
     }
 }
-export default ProdutosNovo
+
+export default ProdutosEditar

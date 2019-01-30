@@ -11,5 +11,8 @@ const apis = {
     deleteCategoria: id => api.delete("categorias/" + id),
     createProduto: produto => api.post('produtos', produto),
     loadProdutos: catId => api.get('produtos?categoria=' + catId),
+    loadProduto: id => api.get('produtos/' + id),
+    deleteProduto: id => api.delete("produtos/" + id),
+    updateProduto: produto => api.put('produtos/' + produto.id, produto),
 }
 export default apis

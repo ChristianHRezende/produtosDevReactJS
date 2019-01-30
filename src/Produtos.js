@@ -6,6 +6,7 @@ import Categoria from './Categoria'
 
 import Api from './Api'
 import ProdutosNovo from './ProdutosNovo';
+import ProdutosEditar from './ProdutosEditar';
 
 class Produtos extends Component {
 
@@ -16,7 +17,7 @@ class Produtos extends Component {
             editingCategoria: ''
         }
     }
-    
+
     componentDidMount() {
         this.loadData()
     }
@@ -28,12 +29,6 @@ class Produtos extends Component {
     }
 
 
-    /**
-     * create new category
-     */
-    createProduto = (produto) => {
-        return Api.createProduto(produto)
-    }
 
     /**
      * Handle enter press to create new category
@@ -87,6 +82,33 @@ class Produtos extends Component {
                 this.loadData();
             })
     }
+
+
+    /**
+     * create new Product
+     */
+    createProduto = (produto) => {
+        return Api.createProduto(produto)
+    }
+    /**
+     * Edit Product
+     */
+    editProduto = (produto) => {
+        return Api.updateProduto(produto)
+    }
+
+    /**
+    * Delete Product
+    */
+    removeProduto = (cat) => {
+        Api.deleteProduto(cat.id)
+            .then(() => {
+                this.loadData();
+            })
+    }
+
+    readProduto = id => Api.loadProduto(id)
+
 
 
     /**
@@ -145,7 +167,8 @@ class Produtos extends Component {
                     <h1>Produtos</h1>
                     <Route exact path={match.url} component={ProdutosHome} />
                     <Route exact path={match.url + "/novo"} render={(props) => { return <ProdutosNovo {...props} categorias={this.state.categorias} createProduto={this.createProduto} /> }} />
-                    <Route path={match.url + '/categoria/:catId'} component={Categoria} />
+                    <Route path={match.url + '/editar/:prodId'} render={props => <ProdutosEditar {...props} categorias={this.state.categorias} readProduto={this.readProduto} editProduto={this.editProduto} />} />
+                    <Route path={match.url + '/categoria/:catId'} render={props => <Categoria {...props} removeProduto={this.removeProduto} />} />
                 </div>
             </div>
         )
